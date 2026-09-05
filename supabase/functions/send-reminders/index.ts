@@ -2,8 +2,10 @@
 // no horário atual que ainda não foram concluídos hoje.
 //
 // Precisa rodar em um agendamento (a cada minuto) — veja instruções no README.
-// Secrets necessários (Project Settings > Edge Functions > Secrets):
-//   VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+// Secrets customizados necessários (Project Settings > Edge Functions > Secrets):
+//   VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY
+// SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY já são injetados automaticamente pelo
+// Supabase em toda Edge Function — não é possível (nem necessário) criá-los como secret.
 
 import webpush from 'npm:web-push@3.6.7'
 import { createClient } from 'npm:@supabase/supabase-js@2'

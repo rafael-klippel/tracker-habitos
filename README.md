@@ -80,21 +80,18 @@ Isso gera uma chave pública e uma privada. Coloque:
 
 ### 3.2. Publicar a Edge Function
 
-Instale a CLI do Supabase (`npm install -g supabase`), faça login (`supabase login`) e rode, na
-raiz do projeto:
+Mais simples pelo próprio painel, sem precisar de CLI: em **Edge Functions > Deploy a new
+function > Via Editor**, crie uma função chamada `send-reminders` e cole o conteúdo de
+`supabase/functions/send-reminders/index.ts`. Clique em **Deploy function**.
 
-```bash
-supabase link --project-ref SEU_PROJECT_REF
-supabase functions deploy send-reminders
-```
-
-Depois, em **Project Settings > Edge Functions > Secrets**, cadastre:
+Depois, em **Edge Functions > Manage secrets**, cadastre só estes dois:
 
 - `VAPID_PUBLIC_KEY` (a pública gerada acima)
 - `VAPID_PRIVATE_KEY` (a privada gerada acima)
-- `SUPABASE_URL` (a mesma Project URL)
-- `SUPABASE_SERVICE_ROLE_KEY` (em Project Settings > API — **nunca** exponha essa chave no
-  frontend, só aqui)
+
+> Não crie secrets `SUPABASE_URL` nem `SUPABASE_SERVICE_ROLE_KEY` — o Supabase bloqueia qualquer
+> secret com prefixo `SUPABASE_` porque já injeta essas duas automaticamente em toda Edge
+> Function.
 
 ### 3.3. Agendar a execução (a cada minuto)
 
