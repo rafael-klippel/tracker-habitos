@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { fetchHabits, fetchEntries, upsertEntry, fetchDailyNote, upsertDailyNote } from '../lib/api'
-import { currentStreak, toDateStr, entriesByDate } from '../lib/habitStats'
+import { currentStreak, toDateStr } from '../lib/habitStats'
 import type { DailyNote, Habit, HabitEntry } from '../types'
 
 const MOODS = [
@@ -63,7 +63,6 @@ export function Dashboard() {
     setSavingNote(false)
   }
 
-  const entryMap = entriesByDate(entries.filter((e) => e.entry_date === today))
   const entriesByHabitId = new Map<string, HabitEntry[]>()
   for (const h of habits) entriesByHabitId.set(h.id, entries.filter((e) => e.habit_id === h.id))
 
@@ -91,8 +90,8 @@ export function Dashboard() {
       ) : (
         <div className="flex flex-col gap-2">
           {habits.map((habit) => {
-            const entry = entryMap.get(today)
             const habitEntries = entriesByHabitId.get(habit.id) ?? []
+            const entry = habitEntries.find((e) => e.entry_date === today)
             const streak = currentStreak(habit, habitEntries)
             const checked = entry?.completed ?? false
             return (
